@@ -56,7 +56,7 @@ export class SearchBox extends React.PureComponent {
     )
     this.containerElement = document.createElement(`div`)
     this.handleRenderChildToContainerElement()
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       return
     }
     this.handleInitializeSearchBox()
@@ -64,7 +64,7 @@ export class SearchBox extends React.PureComponent {
 
   componentDidMount() {
     let searchBox = this.state[SEARCH_BOX]
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       searchBox = this.handleInitializeSearchBox()
     }
     componentDidMount(this, searchBox, eventMap)
@@ -96,7 +96,7 @@ export class SearchBox extends React.PureComponent {
   componentWillUnmount() {
     componentWillUnmount(this)
     this.handleUnmountAtControlPosition()
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       return
     }
     if (this.containerElement) {
@@ -110,7 +110,7 @@ export class SearchBox extends React.PureComponent {
      * @see https://developers.google.com/maps/documentation/javascript/3.exp/reference#SearchBox
      */
     const searchBox = new google.maps.places.SearchBox(
-      this.containerElement.querySelector('input')
+      this.containerElement.querySelector("input")
     )
     construct(SearchBox.propTypes, updaterMap, this.props, searchBox)
     this.setState({
@@ -120,7 +120,7 @@ export class SearchBox extends React.PureComponent {
   }
 
   handleRenderChildToContainerElement() {
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       return
     }
     ReactDOM.unstable_renderSubtreeIntoContainer(
@@ -145,14 +145,14 @@ export class SearchBox extends React.PureComponent {
       const child = this.context[MAP].controls[
         this.props.controlPosition
       ].removeAt(this.mountControlIndex)
-      if(child !== undefined){
+      if (child !== undefined) {
         this.containerElement.appendChild(child)
       }
     }
   }
 
   render() {
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       return ReactDOM.createPortal(
         React.Children.only(this.props.children),
         this.containerElement

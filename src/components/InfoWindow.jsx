@@ -60,14 +60,14 @@ export class InfoWindow extends React.PureComponent {
     if (!canUseDOM || this.containerElement) {
       return
     }
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       this.containerElement = document.createElement(`div`)
     }
   }
 
   componentDidMount() {
     componentDidMount(this, this.state[INFO_WINDOW], eventMap)
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       this.state[INFO_WINDOW].setContent(this.containerElement)
       open(this.state[INFO_WINDOW], this.context[ANCHOR])
       return
@@ -90,7 +90,7 @@ export class InfoWindow extends React.PureComponent {
       updaterMap,
       prevProps
     )
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       return
     }
     if (this.props.children !== prevProps.children) {
@@ -106,7 +106,10 @@ export class InfoWindow extends React.PureComponent {
     componentWillUnmount(this)
     const infoWindow = this.state[INFO_WINDOW]
     if (infoWindow) {
-      if (!React.version.match(/^16/) && infoWindow.getContent()) {
+      if (
+        !React.version.match(/^16/) ||
+        (React.version.match(/^17/) && infoWindow.getContent())
+      ) {
         ReactDOM.unmountComponentAtNode(infoWindow.getContent())
       }
       infoWindow.setMap(null)
@@ -114,7 +117,7 @@ export class InfoWindow extends React.PureComponent {
   }
 
   render() {
-    if (React.version.match(/^16/)) {
+    if (React.version.match(/^16/) || React.version.match(/^17/)) {
       return ReactDOM.createPortal(
         React.Children.only(this.props.children),
         this.containerElement
