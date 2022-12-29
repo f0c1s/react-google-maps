@@ -1,7 +1,7 @@
-import { parse } from "url"
 import toMarkdown from "to-markdown"
 import makeFetchHappen from "make-fetch-happen"
 import cheerio from "cheerio"
+
 const fetch = makeFetchHappen.defaults({
   cacheManager: ".cache/", // path where cache will be written (and read)
 })
@@ -33,7 +33,7 @@ function contentToJS(KlassName, $, $content) {
   const $constructorTable = $content.find(
     `[summary="class ${KlassName} - Constructor"]`
   )
-  const [, constructorArgs] = $constructorTable
+  const constructorArgs = $constructorTable
     .find(`tr > td > code`)
     .text()
     .match(/\S+\((.*)\)/)
